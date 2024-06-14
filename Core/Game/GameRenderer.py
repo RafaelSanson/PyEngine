@@ -1,7 +1,7 @@
-from Core.Object import *
+from Core.Game.GameObject import *
 
 
-class GameRenderer(Object):
+class GameRenderer(GameObject):
     def __init__(self):
         super().__init__()
         self.renderers = []

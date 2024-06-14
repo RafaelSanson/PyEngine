@@ -1,10 +1,10 @@
 from Component import Component
 from Components.TransformComponent import TransformComponent
-from Object import *
+from Core.Game.GameObject import *
 from typing import List
 
 
-class Actor(Object):
+class Actor(GameObject):
     def __init__(self):
         super().__init__()
         self._transform = TransformComponent(self)
