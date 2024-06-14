@@ -1,10 +1,11 @@
 import pygame
 from pygame.locals import *
-from Core.Platform import Platform
-from Core.Player import Player
+from Platform import Platform
+from Player import Player
 import sys
 import random
 import time
+
 
 def check(platform, groupies):
     if pygame.sprite.spritecollideany(platform, groupies):
@@ -17,6 +18,7 @@ def check(platform, groupies):
                     abs(platform.rect.bottom - entity.rect.top) < 40):
                 return True
         C = False
+
 
 def plat_gen():
     while len(platforms) < 6:
