@@ -1,19 +1,19 @@
-from Component import Component
-from Components.TransformComponent import TransformComponent
+from pygame import Vector2
+
 from Core.Game.GameObject import *
-from typing import List
+from Core.Game.Interfaces.TransformableInterface import TransformableInterface
+from Core.SceneComponent import SceneComponent
 
 
-class Actor(GameObject):
-    def __init__(self):
+class Actor(GameObject, TransformableInterface):
+    def __init__(self, x: int, y: int):
         super().__init__()
-        self._transform = TransformComponent(self)
-        self._components: List[Component] = []
+        self._position = Vector2(x, y)
+        self._components: [SceneComponent] = []
 
-    def add_component(self, component: Component):
+    def add_component(self, component: SceneComponent):
         self._components.append(component)
 
     @property
-    def transform(self):
-        return self._transform
-
+    def position(self) -> Vector2:
+        return self._position
