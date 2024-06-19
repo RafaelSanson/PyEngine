@@ -1,5 +1,5 @@
 import pygame
-from pygame import Rect, Vector2, Surface
+from pygame import Rect, Surface, Color
 
 from Core.Game.GameRenderer import GameRenderer
 from Core.Game.Interfaces.RendererInterface import RendererInterface
@@ -7,17 +7,12 @@ from Core.SceneComponent import *
 
 
 class SpriteComponent(SceneComponent, RendererInterface):
-    def __init__(self, owner, width: int, height: int):
+    def __init__(self, owner, width: int, height: int, color: Color):
         super().__init__(owner)
         self._surface = pygame.Surface((width, height))
-        self._surface.fill((0, 255, 0))
+        self._surface.fill(color)
         renderer = GameRenderer()
         renderer.register_renderer(self)
-
-    @property
-    def position(self) -> Vector2:
-        return super().position
-        pass
 
     @property
     def surface(self) -> Surface:
@@ -29,5 +24,5 @@ class SpriteComponent(SceneComponent, RendererInterface):
         return self._compute_rect(surface_rect)
 
     def _compute_rect(self, surface_rect):
-        return Rect(self.position.x - surface_rect.width / 2, self.position.y - surface_rect.height / 2,
+        return Rect(self.owner.position.x - surface_rect.width / 2, self.owner.position.y - surface_rect.height / 2,
                     surface_rect.width, surface_rect.height)

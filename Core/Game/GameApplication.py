@@ -20,7 +20,6 @@ class GameApplication:
         while True:
             self._GameWorld.tick()
             self._GameRenderer.draw()
-
             self. _Clock.tick(FPS)
 
     def load_scene(self, scene: GameScene):

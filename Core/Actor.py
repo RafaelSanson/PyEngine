@@ -14,6 +14,13 @@ class Actor(GameObject, TransformableInterface):
     def add_component(self, component: SceneComponent):
         self._components.append(component)
 
+    def translate(self, amount: Vector2):
+        self._position += amount
+
     @property
     def position(self) -> Vector2:
         return self._position
+
+    def tick(self):
+        for component in self._components:
+            component.tick()

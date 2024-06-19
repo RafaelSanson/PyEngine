@@ -1,14 +1,11 @@
-from pygame import Vector2
-
 from Core.Game.GameObject import *
 from Core.Game.Interfaces.TransformableInterface import TransformableInterface
 
 
-class SceneComponent(GameObject, TransformableInterface):
-    @property
-    def position(self) -> Vector2:
-        return self._root
-
-    def __init__(self, root: TransformableInterface):
+class SceneComponent(GameObject):
+    def __init__(self, owner: TransformableInterface):
         super().__init__()
-        self._root = root.position
+        self.owner = owner
+
+    def tick(self):
+        pass

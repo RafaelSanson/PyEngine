@@ -2,10 +2,8 @@ from abc import abstractmethod
 
 from pygame import Surface, Rect
 
-from Core.Game.Interfaces.TransformableInterface import TransformableInterface
 
-
-class RendererInterface(TransformableInterface):
+class RendererInterface:
 
     @property
     @abstractmethod

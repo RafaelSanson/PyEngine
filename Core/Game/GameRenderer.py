@@ -1,3 +1,4 @@
+import string
 from typing import List
 
 import pygame
@@ -14,15 +15,13 @@ class GameRenderer:
     def __new__(cls, *args, **kwargs):
         if not cls._instance:
             cls._instance = super(GameRenderer, cls).__new__(cls, *args, **kwargs)
+            cls._instance._renderers = []
+            cls._instance._viewport = pygame.display.set_mode((WIDTH, HEIGHT))
         return cls._instance
-
-    def __init__(self):
-        super().__init__()
-        self._renderers: List[RendererInterface] = []
-        self._viewport = pygame.display.set_mode((WIDTH, HEIGHT))
 
     def register_renderer(self, renderer: RendererInterface):
         self._renderers.append(renderer)
+        count = self._renderers.count
 
     def unregister_renderer(self, renderer: RendererInterface):
         self._renderers.remove(renderer)
