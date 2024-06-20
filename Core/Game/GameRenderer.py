@@ -1,6 +1,3 @@
-import string
-from typing import List
-
 import pygame
 
 from Core.Game.Interfaces.RendererInterface import RendererInterface

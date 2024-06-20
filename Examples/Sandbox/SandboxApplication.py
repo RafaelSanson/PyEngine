@@ -3,7 +3,7 @@ from typing import List
 from pygame import Vector2, Color
 
 from Core.Actor import Actor
-from Core.Components.PhysicsComponent import PhysicsComponent
+from Core.Components.RigidbodyComponent import RigidbodyInterface, RigidbodyComponent
 from Core.Components.SpriteComponent import SpriteComponent
 from Core.Game.GameApplication import GameApplication
 from Core.Game.GameScene import GameScene
@@ -27,7 +27,7 @@ class SandboxScene(GameScene):
         player_sprite_component = SpriteComponent(player, 100, 100, Color(0, 255, 0))
         player.add_component(player_sprite_component)
 
-        physics_component = PhysicsComponent(player, 100, 100)
+        physics_component = RigidbodyComponent(player, 100, 100, False)
         physics_component.add_constant_force(Vector2(0, 5))
         player.add_component(physics_component)
         actors.append(player)
@@ -36,7 +36,7 @@ class SandboxScene(GameScene):
         landscape_sprite_component = SpriteComponent(landscape, 10000, 50, Color(0, 255, 0))
         landscape.add_component(landscape_sprite_component)
 
-        landscape_physics_component = PhysicsComponent(landscape, 10000, 50)
+        landscape_physics_component = RigidbodyComponent(landscape, 10000, 50, True)
         landscape.add_component(landscape_physics_component)
         actors.append(landscape)
 

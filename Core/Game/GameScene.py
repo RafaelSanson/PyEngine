@@ -7,7 +7,6 @@ class GameScene(ABC):
     def __init__(self):
         super().__init__()
 
-    @abstractmethod
     def load(self) -> [Actor]:
         pass
 

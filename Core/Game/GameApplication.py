@@ -12,13 +12,14 @@ class GameApplication:
     def __init__(self):
         super().__init__()
         self._GameRenderer = GameRenderer()
-        self._GameWorld = GameWorld(self._GameRenderer)
+        self._GameWorld = GameWorld()
         self._GameLog = GameLog()
         self._Clock = pygame.time.Clock()
 
     def loop(self):
         while True:
             self._GameWorld.tick()
+            self._GameWorld.tick_physics()
             self._GameRenderer.draw()
             self. _Clock.tick(FPS)
 
