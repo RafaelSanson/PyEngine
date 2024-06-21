@@ -35,15 +35,15 @@ class SandboxScene(GameScene):
         player.add_component(player_sprite_component)
 
         physics_component = RigidbodyComponent(player, 100, 100, False)
-        physics_component.add_constant_force(Vector2(0, 5))
+        physics_component.add_constant_force(Vector2(0, 20))
         player.add_component(physics_component)
         actors.append(player)
 
         landscape = Actor(0, 950)
-        landscape_sprite_component = SpriteComponent(landscape, 10000, 50, "Platform")
+        landscape_sprite_component = SpriteComponent(landscape, 1000, 50, "Platform")
         landscape.add_component(landscape_sprite_component)
 
-        landscape_physics_component = RigidbodyComponent(landscape, 10000, 50, True)
+        landscape_physics_component = RigidbodyComponent(landscape, 1000, 50, True)
         landscape.add_component(landscape_physics_component)
         actors.append(landscape)
 
