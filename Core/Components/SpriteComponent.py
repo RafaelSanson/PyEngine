@@ -1,28 +1,37 @@
-import pygame
-from pygame import Rect, Surface, Color
+import string
 
+import pygame
+from pygame import Rect, Surface
+
+from Core.Assets.TextureAsset import TextureAsset
+from Core.Game.GameAssetManager import GameAssetManager
 from Core.Game.GameRenderer import GameRenderer
 from Core.Game.Interfaces.RendererInterface import RendererInterface
 from Core.SceneComponent import *
 
 
 class SpriteComponent(SceneComponent, RendererInterface):
-    def __init__(self, owner, width: int, height: int, color: Color):
+    def __init__(self, owner, width: int, height: int, texture_asset: string = "None"):
         super().__init__(owner)
-        self._surface = pygame.Surface((width, height))
-        self._surface.fill(color)
+        self._width = width
+        self._height = height
+        self._texture_asset = texture_asset
         renderer = GameRenderer()
         renderer.register_renderer(self)
 
     @property
-    def surface(self) -> Surface:
-        return self._surface
+    def texture(self):
+        asset_manager = GameAssetManager()
+        if self._texture_asset != "None":
+            asset = asset_manager.get_asset(TextureAsset, self._texture_asset)
+            texture = asset.load
+            if isinstance(texture, Surface):
+                scaled_texture = pygame.transform.scale(texture, (self._width, self._height))
+                return scaled_texture
+
+        return Surface((self._width, self._height))
 
     @property
     def rectangle(self) -> Rect:
-        surface_rect = self.surface.get_rect()
-        return self._compute_rect(surface_rect)
-
-    def _compute_rect(self, surface_rect):
         return Rect(self.owner.position.x, self.owner.position.y,
-                    surface_rect.width, surface_rect.height)
+                    self._width, self._height)

@@ -3,9 +3,11 @@ from typing import List
 from pygame import Vector2, Color
 
 from Core.Actor import Actor
-from Core.Components.RigidbodyComponent import RigidbodyInterface, RigidbodyComponent
+from Core.Assets.TextureAsset import TextureAsset
+from Core.Components.RigidbodyComponent import RigidbodyComponent
 from Core.Components.SpriteComponent import SpriteComponent
 from Core.Game.GameApplication import GameApplication
+from Core.Game.GameAssetManager import GameAssetManager
 from Core.Game.GameScene import GameScene
 
 
@@ -18,13 +20,18 @@ class SandboxScene(GameScene):
     def load(self):
         actors: List[Actor] = []
 
+        GameAssetManager().set_content_directory("Examples\\Sandbox\\Content\\")
+        TextureAsset("Player", "snowman.png")
+        TextureAsset("Background", "background.png")
+        TextureAsset("Platform", "platform.png")
+
         background_actor = Actor(0, 0)
-        background_sprite_component = SpriteComponent(background_actor, 1000, 1000, Color(127, 127, 127))
+        background_sprite_component = SpriteComponent(background_actor, 1000, 1000, "Background")
         background_actor.add_component(background_sprite_component)
         actors.append(background_actor)
 
         player = Actor(250, 250)
-        player_sprite_component = SpriteComponent(player, 100, 100, Color(0, 255, 0))
+        player_sprite_component = SpriteComponent(player, 100, 100, "Player")
         player.add_component(player_sprite_component)
 
         physics_component = RigidbodyComponent(player, 100, 100, False)
@@ -33,7 +40,7 @@ class SandboxScene(GameScene):
         actors.append(player)
 
         landscape = Actor(0, 950)
-        landscape_sprite_component = SpriteComponent(landscape, 10000, 50, Color(0, 255, 0))
+        landscape_sprite_component = SpriteComponent(landscape, 10000, 50, "Platform")
         landscape.add_component(landscape_sprite_component)
 
         landscape_physics_component = RigidbodyComponent(landscape, 10000, 50, True)

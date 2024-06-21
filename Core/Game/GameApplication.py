@@ -1,3 +1,4 @@
+from Core.Game.GameAssetManager import GameAssetManager
 from Core.Game.GameLog import GameLog
 from Core.Game.GameRenderer import *
 from Core.Game.GameScene import *
@@ -14,6 +15,7 @@ class GameApplication:
         self._GameRenderer = GameRenderer()
         self._GameWorld = GameWorld()
         self._GameLog = GameLog()
+        self._GameAssetManager = GameAssetManager()
         self._Clock = pygame.time.Clock()
 
     def loop(self):

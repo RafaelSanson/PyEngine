@@ -1,13 +1,15 @@
 from abc import abstractmethod
 
-from pygame import Surface, Rect
+from pygame import Rect
+
+from Core.Assets.TextureAsset import TextureAsset
 
 
 class RendererInterface:
 
     @property
     @abstractmethod
-    def surface(self) -> Surface:
+    def texture(self) -> TextureAsset:
         pass
 
     @property

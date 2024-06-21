@@ -1,4 +1,5 @@
 import pygame
+from pygame import Surface
 
 from Core.Game.Interfaces.RendererInterface import RendererInterface
 
@@ -24,8 +25,9 @@ class GameRenderer:
 
     def draw(self):
         for renderer in self._renderers:
-            surface = renderer.surface
+            texture = renderer.texture
             rectangle = renderer.rectangle
-            self._viewport.blit(surface, rectangle)
+            if isinstance(texture, Surface):
+                self._viewport.blit(texture, rectangle)
 
         pygame.display.update()
