@@ -18,7 +18,6 @@ class GameRenderer:
 
     def register_renderer(self, renderer: RendererInterface):
         self._renderers.append(renderer)
-        count = self._renderers.count
 
     def unregister_renderer(self, renderer: RendererInterface):
         self._renderers.remove(renderer)

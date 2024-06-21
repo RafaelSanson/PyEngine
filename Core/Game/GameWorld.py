@@ -32,16 +32,24 @@ class GameWorld:
 
     def tick_physics(self):
         for dynamic_object in self._physics_components_dynamic:
-            if not self.check_collision(dynamic_object):
-                dynamic_object.apply_velocity()
+            percentage = self.check_collision_with_other_objects(dynamic_object)
+            if percentage > 0.0:
+                dynamic_object.apply_velocity(percentage)
 
-    def check_collision(self, dynamic_rigidbody: RigidbodyInterface):
+    def check_collision_with_other_objects(self, dynamic_rigidbody: RigidbodyInterface) -> float:
+        percentage = 1.0
         for other_dynamic_object in self._physics_components_dynamic:
-            if dynamic_rigidbody.project_collision(other_dynamic_object):
-                return True
+            new_percentage = dynamic_rigidbody.project_collision(other_dynamic_object)
+            percentage = new_percentage if new_percentage < percentage else percentage
+            if percentage == 0:
+                return percentage
 
         for static_object in self._physics_components_static:
-            if dynamic_rigidbody.project_collision(static_object):
-                return True
+            new_percentage = dynamic_rigidbody.project_collision(static_object)
 
-        return False
+            percentage = new_percentage if new_percentage < percentage else percentage
+
+            if percentage == 0:
+                return percentage
+
+        return percentage

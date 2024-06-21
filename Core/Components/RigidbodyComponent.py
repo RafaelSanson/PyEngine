@@ -5,6 +5,8 @@ from Core.Game.Interfaces.RigidbodyInterface import RigidbodyInterface
 from Core.SceneComponent import *
 from pygame import Rect, Vector2
 
+COLLISION_STEPS = 10
+
 
 class RigidbodyComponent(SceneComponent, RigidbodyInterface):
     @property
@@ -40,18 +42,24 @@ class RigidbodyComponent(SceneComponent, RigidbodyInterface):
     def rect(self) -> Rect:
         return self._rect
 
-    @property
-    def projected_rect(self) -> Rect:
-        projected_position = self.owner.position + self.velocity
+    def projected_rect(self, percentage: float) -> Rect:
+        projected_position = self.owner.position + self.velocity * percentage
         projected_rect = Rect(projected_position.x, projected_position.y,
                               self.rect.width, self.rect.height)
         return projected_rect
 
-    def project_collision(self, other: 'RigidbodyComponent') -> bool:
+    def project_collision(self, other: 'RigidbodyComponent') -> float:
         if other == self:
-            return False
-        else:
-            return self.projected_rect.colliderect(other.projected_rect)
+            return 1.0
 
-    def apply_velocity(self):
-        self.owner.translate(self.velocity)
+        for i in range(1, COLLISION_STEPS):
+            percentage: float = i / COLLISION_STEPS
+            my_rect = self.projected_rect(percentage)
+            other_rect = other.projected_rect(percentage)
+            if my_rect.colliderect(other_rect):
+                return percentage - 1 / COLLISION_STEPS if i > 1 else 0.0
+
+        return 1.0
+
+    def apply_velocity(self, percentage):
+        self.owner.translate(self.velocity * percentage)

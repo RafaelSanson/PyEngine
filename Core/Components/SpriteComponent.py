@@ -24,5 +24,5 @@ class SpriteComponent(SceneComponent, RendererInterface):
         return self._compute_rect(surface_rect)
 
     def _compute_rect(self, surface_rect):
-        return Rect(self.owner.position.x - surface_rect.width / 2, self.owner.position.y - surface_rect.height / 2,
+        return Rect(self.owner.position.x, self.owner.position.y,
                     surface_rect.width, surface_rect.height)

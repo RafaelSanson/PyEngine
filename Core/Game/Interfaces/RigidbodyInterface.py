@@ -10,11 +10,11 @@ class RigidbodyInterface:
         pass
 
     @abstractmethod
-    def apply_velocity(self):
+    def apply_velocity(self, percentage: float):
         pass
 
     @abstractmethod
-    def project_collision(self, other_rigidbody):
+    def project_collision(self, other_rigidbody) -> bool:
         pass
 
     @property

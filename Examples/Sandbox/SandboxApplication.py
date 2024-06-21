@@ -18,7 +18,7 @@ class SandboxScene(GameScene):
     def load(self):
         actors: List[Actor] = []
 
-        background_actor = Actor(500, 500)
+        background_actor = Actor(0, 0)
         background_sprite_component = SpriteComponent(background_actor, 1000, 1000, Color(127, 127, 127))
         background_actor.add_component(background_sprite_component)
         actors.append(background_actor)
@@ -32,7 +32,7 @@ class SandboxScene(GameScene):
         player.add_component(physics_component)
         actors.append(player)
 
-        landscape = Actor(0, 1000)
+        landscape = Actor(0, 950)
         landscape_sprite_component = SpriteComponent(landscape, 10000, 50, Color(0, 255, 0))
         landscape.add_component(landscape_sprite_component)
 
