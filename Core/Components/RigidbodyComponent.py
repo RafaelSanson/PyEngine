@@ -1,5 +1,6 @@
 from typing import List
 
+from Core.Game.GameClock import GameClock
 from Core.Game.GameWorld import GameWorld
 from Core.Game.Interfaces.RigidbodyInterface import RigidbodyInterface
 from Core.SceneComponent import *
@@ -43,7 +44,7 @@ class RigidbodyComponent(SceneComponent, RigidbodyInterface):
         return self._rect
 
     def projected_rect(self, percentage: float) -> Rect:
-        projected_position = self.owner.position + self.velocity * percentage
+        projected_position = self.owner.position + self.velocity * percentage * GameClock().delta_time
         projected_rect = Rect(projected_position.x, projected_position.y,
                               self.rect.width, self.rect.height)
         return projected_rect
@@ -62,4 +63,4 @@ class RigidbodyComponent(SceneComponent, RigidbodyInterface):
         return 1.0
 
     def apply_velocity(self, percentage):
-        self.owner.translate(self.velocity * percentage)
+        self.owner.translate(self.velocity * percentage * GameClock().delta_time)

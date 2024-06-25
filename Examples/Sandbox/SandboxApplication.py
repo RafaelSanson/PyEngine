@@ -3,6 +3,7 @@ from typing import List
 from pygame import Vector2, Color
 
 from Core.Actor import Actor
+from Core.Assets.SpritesheetAsset import SpritesheetAsset
 from Core.Assets.TextureAsset import TextureAsset
 from Core.Components.RigidbodyComponent import RigidbodyComponent
 from Core.Components.SpriteComponent import SpriteComponent
@@ -21,7 +22,9 @@ class SandboxScene(GameScene):
         actors: List[Actor] = []
 
         GameAssetManager().set_content_directory("Examples\\Sandbox\\Content\\")
-        TextureAsset("Player", "snowman.png")
+        SpritesheetAsset(1, 24, 2, "Player", "doux.png", 0.5)
+
+        # TextureAsset("Player", "snowman.png")
         TextureAsset("Background", "background.png")
         TextureAsset("Platform", "platform.png")
 
@@ -35,7 +38,7 @@ class SandboxScene(GameScene):
         player.add_component(player_sprite_component)
 
         physics_component = RigidbodyComponent(player, 100, 100, False)
-        physics_component.add_constant_force(Vector2(0, 20))
+        physics_component.add_constant_force(Vector2(0, 980))
         player.add_component(physics_component)
         actors.append(player)
 
@@ -52,4 +55,4 @@ class SandboxScene(GameScene):
 
 app = SandboxApplication()
 app.load_scene(SandboxScene())
-app.loop()
+app.start()
