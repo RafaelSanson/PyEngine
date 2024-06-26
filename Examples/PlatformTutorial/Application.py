@@ -20,7 +20,7 @@ pygame.display.set_caption("Game")
 
 background = pygame.image.load("background.png")
  
-class Player(pygame.sprite.Sprite):
+class Player(Actor):
     def __init__(self):
         super().__init__() 
         self.surf = pygame.image.load("snowman.png")

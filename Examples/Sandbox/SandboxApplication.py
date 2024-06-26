@@ -1,6 +1,6 @@
 from typing import List
 
-from pygame import Vector2, Color
+from pygame import Vector2
 
 from Core.Actor import Actor
 from Core.Assets.SpritesheetAsset import SpritesheetAsset

@@ -5,8 +5,6 @@ from Core.Game.GameRenderer import *
 from Core.Game.GameScene import *
 from Core.Game.GameWorld import GameWorld
 
-WIDTH = 1000
-HEIGHT = 1000
 
 class GameApplication:
     def __init__(self):
