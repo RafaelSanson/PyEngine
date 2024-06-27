@@ -17,6 +17,6 @@ class GameClock:
         self._delta_time = self._Clock.tick() / 1000
 
     @property
-    def delta_time(self):
+    def delta_time(self) -> float:
         return self._delta_time
 

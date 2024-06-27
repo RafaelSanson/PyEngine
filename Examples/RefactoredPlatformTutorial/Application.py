@@ -1,5 +1,3 @@
-from typing import List
-
 from Core.Actor import Actor
 from Core.Game.GameApplication import GameApplication
 from Core.Game.GameAssetManager import GameAssetManager
@@ -11,7 +9,7 @@ from Examples.RefactoredPlatformTutorial.Game.SnowmanActor import SnowmanActor
 
 class PlatformScene(GameScene):
     def load(self):
-        actors: List[Actor] = []
+        actors: list[Actor] = []
         GameAssetManager().set_content_directory("Examples\\RefactoredPlatformTutorial\\Content\\")
         actors.append(BackgroundActor(0, 0))
         actors.append(SnowmanActor(250, 250))

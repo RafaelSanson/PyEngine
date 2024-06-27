@@ -1,9 +1,11 @@
-from pygame import Vector2
+import pygame
+from pygame.locals import *
 
 from Core.Actor import Actor
 from Core.Assets.TextureAsset import TextureAsset
 from Core.Components.RigidbodyComponent import RigidbodyComponent
 from Core.Components.SpriteComponent import SpriteComponent
+from Core.Game.GameInput import GameInput
 
 
 class SnowmanActor(Actor):
@@ -14,30 +16,31 @@ class SnowmanActor(Actor):
         self.score = 0
         self.add_component(SpriteComponent(self, 100, 100, "Player"))
 
-        physics_component = RigidbodyComponent(self, 100, 100, False)
-        physics_component.add_constant_force(Vector2(0, 980))
-        self.add_component(physics_component)
+        self._physics_component = RigidbodyComponent(self, 100, 100, False)
+        self._physics_component.add_constant_force(0, 980)
+        self.add_component(self._physics_component)
 
-    # def move(self):
-    #     self.acc = vec(0, 0.5)
-    #
-    #     pressed_keys = pygame.key.get_pressed()
-    #
-    #     if pressed_keys[K_LEFT]:
-    #         self.acc.x = -ACC
-    #     if pressed_keys[K_RIGHT]:
-    #         self.acc.x = ACC
-    #
-    #     self.acc.x += self.vel.x * FRIC
-    #     self.vel += self.acc
-    #     self.pos += self.vel + 0.5 * self.acc
-    #
-    #     if self.pos.x > WIDTH:
-    #         self.pos.x = 0
-    #     if self.pos.x < 0:
-    #         self.pos.x = WIDTH
-    #
-    #     self.rect.midbottom = self.pos
+    def tick(self):
+        super().tick()
+        self.process_keyboard_input()
+
+    def process_keyboard_input(self):
+        pressed_keys = GameInput().pressed_keys
+        if pressed_keys:
+            if pressed_keys[K_LEFT]:
+                self._physics_component.add_one_time_impulse(-100, 0)
+            if pressed_keys[K_RIGHT]:
+                self._physics_component.add_one_time_impulse(100, 0)
+
+        for event in GameInput().events:
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    self._physics_component.add_one_time_impulse(0, -4000)
+
+        if self.position.x > 1000:
+            self.teleport(0, self.position.y)
+        if self.position.x < 0:
+            self.teleport(1000, self.position.y)
 
     # def jump(self):
     #     hits = pygame.sprite.spritecollide(self, platforms, False)

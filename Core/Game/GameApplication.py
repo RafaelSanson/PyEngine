@@ -1,8 +1,11 @@
+import pygame
+
 from Core.Game.GameAssetManager import GameAssetManager
 from Core.Game.GameClock import GameClock
+from Core.Game.GameInput import GameInput
 from Core.Game.GameLog import GameLog
-from Core.Game.GameRenderer import *
-from Core.Game.GameScene import *
+from Core.Game.GameRenderer import GameRenderer
+from Core.Game.GameScene import GameScene
 from Core.Game.GameWorld import GameWorld
 
 
@@ -15,9 +18,12 @@ class GameApplication:
         self._GameLog = GameLog()
         self._GameAssetManager = GameAssetManager()
         self._GameClock = GameClock()
+        self._GameInput = GameInput()
 
     def start(self):
+        pygame.init()
         while True:
+            self._GameInput.tick()
             self._GameWorld.tick()
             self._GameWorld.tick_physics()
             self._GameRenderer.draw()

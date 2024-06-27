@@ -7,6 +7,8 @@ from Core.SceneComponent import *
 from pygame import Rect, Vector2
 
 COLLISION_STEPS = 10
+IMPULSE_FALLOFF = 0.95
+SLEEP_THRESHOLD = 0.05
 
 
 class RigidbodyComponent(SceneComponent, RigidbodyInterface):
@@ -23,17 +25,37 @@ class RigidbodyComponent(SceneComponent, RigidbodyInterface):
         super().__init__(owner)
         self._rect = Rect(0.0, 0.0, width, height)
         self._constant_forces: List[Vector2] = []
+        self._one_time_impulses: List[Vector2] = []
         self._velocity: Vector2 = Vector2(0, 0)
         self._static = is_static
         self._register_physics()
 
-    def add_constant_force(self, new_constant_force: Vector2):
-        self._constant_forces.append(new_constant_force)
+    def add_constant_force(self, x: float, y: float):
+        if not self._static:
+            self._constant_forces.append(Vector2(x, y))
+
+    def add_one_time_impulse(self, x: float, y: float):
+        if not self._static:
+            self._one_time_impulses.append(Vector2(x, y))
 
     def tick(self):
         self._velocity = Vector2(0, 0)
         for constant_force in self._constant_forces:
             self._velocity += constant_force
+
+        sleeping_impulses = list[int]()
+        for i in range(len(self._one_time_impulses)):
+            self._velocity += self._one_time_impulses[i]
+            self._one_time_impulses[i] *= IMPULSE_FALLOFF
+            if self._one_time_impulses[i].length_squared() <= SLEEP_THRESHOLD:
+                sleeping_impulses.append(i)
+
+        # Now we reverse sort sleeping_impulses
+        sleeping_impulses.sort(reverse=True)
+
+        # Then we remove the elements from largest index to smallest
+        for index in sleeping_impulses:
+            del self._one_time_impulses[index]
 
     @property
     def velocity(self) -> Vector2:

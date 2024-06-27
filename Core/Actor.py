@@ -19,6 +19,9 @@ class Actor(GameObject, TransformableInterface):
     def translate(self, amount: Vector2):
         self._position += amount
 
+    def teleport(self, x: float, y: float):
+        self._position = Vector2(x, y)
+
     @property
     def position(self) -> Vector2:
         return self._position
