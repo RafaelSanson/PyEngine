@@ -7,10 +7,10 @@ from pygame import Vector2
 class TransformableInterface(ABC):
     @property
     @abstractmethod
-    def position(self) -> pygame.math.Vector2:
+    def position(self) -> [float, float]:
         pass
 
     @abstractmethod
-    def translate(self, amount: Vector2):
+    def translate(self, x: float, y: float):
         pass
 

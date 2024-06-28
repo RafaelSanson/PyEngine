@@ -14,6 +14,7 @@ class PlatformScene(GameScene):
         actors.append(BackgroundActor(0, 0))
         actors.append(SnowmanActor(250, 250))
         actors.append(LandscapeActor(0, 950))
+        actors.append(LandscapeActor(500, 500))
         return actors
 
 

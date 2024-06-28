@@ -84,5 +84,5 @@ class RigidbodyComponent(SceneComponent, RigidbodyInterface):
 
         return 1.0
 
-    def apply_velocity(self, percentage):
+    def add_velocity_impulse(self, percentage):
         self.owner.translate(self.velocity * percentage * GameClock().delta_time)

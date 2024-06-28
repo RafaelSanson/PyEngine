@@ -16,8 +16,8 @@ class Actor(GameObject, TransformableInterface):
     def add_component(self, component: SceneComponent):
         self._components.append(component)
 
-    def translate(self, amount: Vector2):
-        self._position += amount
+    def translate(self, x: float, y: float):
+        self._position += Vector2(x, y)
 
     def teleport(self, x: float, y: float):
         self._position = Vector2(x, y)
